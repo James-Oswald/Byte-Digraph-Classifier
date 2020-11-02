@@ -1,4 +1,6 @@
+
 import numpy as np
+import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
 
@@ -6,6 +8,7 @@ num_classes = 10
 input_shape = (28, 28, 1)
 # the data, split between train and test sets
 (x_train, y_train), (x_test, y_test) = keras.datasets.mnist.load_data()
+
 # Scale images to the [0, 1] range
 x_train = x_train.astype("float32") / 255
 x_test = x_test.astype("float32") / 255
@@ -30,8 +33,10 @@ model = keras.Sequential(
         layers.Dense(num_classes, activation="softmax"),
     ]
 )
+model.summary()
+
 batch_size = 128
-epochs = 15
+epochs = 3
 model.compile(loss="categorical_crossentropy", optimizer="adam", metrics=["accuracy"])
 model.fit(x_train, y_train, batch_size=batch_size, epochs=epochs, validation_split=0.1)
 model.save("Models/MNIST")
